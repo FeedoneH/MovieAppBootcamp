@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/moviesFragment"
+        android:icon="@drawable/ic_baseline_movie_filter_24"
+        android:title="Movies" />
+    <item
+        android:id="@+id/tvShowsFragment"
+        android:icon="@drawable/ic_baseline_live_tv_24"
+        android:title="Tv Shows" />
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="Search" />
+    <item
+        android:id="@+id/accountFragment"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Account" />
+</menu>

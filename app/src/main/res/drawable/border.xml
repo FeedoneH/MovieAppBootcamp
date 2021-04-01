@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <item android:id="@+id/border">
+
+        <shape android:shape="rectangle">
+            <!-- Set the border color of your layout here -->
+            <solid   android:color="#3AFB03" />
+
+        </shape>
+    </item>
+
+    <!-- This is for border bottom but
+    you can change this according to your need -->
+    <item android:right="4dp" android:bottom="4dp" android:top="4dp" android:left="4dp">
+
+        <shape >
+            <!-- Set the background color of your layout here -->
+            <solid  />
+        </shape>
+    </item>
+
+</layer-list>
