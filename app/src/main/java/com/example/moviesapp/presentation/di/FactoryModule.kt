@@ -9,7 +9,7 @@ import com.example.moviesapp.presentation.details.DetailViewModelFactory
 import com.example.moviesapp.presentation.login.LogInViewModelFactory
 import com.example.moviesapp.presentation.movie.MovieViewModelFactory
 import com.example.moviesapp.presentation.search.SearchViewModelFactory
-import com.example.moviesapp.presentation.signup.SignUpViewModelFactory
+import com.example.moviesapp.presentation.auth.AuthViewModelFactory
 import com.example.moviesapp.presentation.tvshow.TvShowViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -23,8 +23,10 @@ class FactoryModule {
 
     @Singleton
     @Provides
-    fun provideMovieViewModelFactory(getMoviesRemoteUseCase: GetMoviesRemoteUseCase,getCurrentUserUseCase: GetCurrentUserUseCase): MovieViewModelFactory {
-        return MovieViewModelFactory(getMoviesRemoteUseCase,getCurrentUserUseCase)
+    fun provideMovieViewModelFactory(
+            getMoviesRemoteUseCase: GetMoviesRemoteUseCase,
+    ): MovieViewModelFactory {
+        return MovieViewModelFactory(getMoviesRemoteUseCase)
     }
 
     @Singleton
@@ -37,8 +39,17 @@ class FactoryModule {
     @Provides
     fun provideDetailViewModelFactory(
             getTvShowsRemoteUseCase: GetTvShowsRemoteUseCase,
-            getMoviesRemoteUseCase: GetMoviesRemoteUseCase): DetailViewModelFactory {
-        return DetailViewModelFactory(getTvShowsRemoteUseCase, getMoviesRemoteUseCase)
+            getMoviesRemoteUseCase: GetMoviesRemoteUseCase,
+            getMovieStatusUseCase: GetMovieStatusUseCase,
+            getTvShowStateUseCase: GetTvShowStateUseCase,
+            toggleFavoriteUseCase: ToggleFavoriteUseCase,
+            rateMovieUseCase: RateMovieUseCase,
+            rateTvShowUseCase: RateTvShowUseCase,
+            getAccountUseCase: GetAccountUseCase,
+    ): DetailViewModelFactory {
+        return DetailViewModelFactory(getTvShowsRemoteUseCase, getMoviesRemoteUseCase,
+                getMovieStatusUseCase, getTvShowStateUseCase, toggleFavoriteUseCase,
+                rateMovieUseCase, rateTvShowUseCase, getAccountUseCase)
     }
 
     @Singleton
@@ -55,23 +66,26 @@ class FactoryModule {
 
     @Singleton
     @Provides
-    fun provideLogInViewModelFactory(logInUserUseCase: LogInUserUseCase,getCurrentUserUseCase: GetCurrentUserUseCase): LogInViewModelFactory {
-        return LogInViewModelFactory(logInUserUseCase,getCurrentUserUseCase)
+    fun provideLogInViewModelFactory(authUseCase: AuthUseCase, deleteSessionUseCase: DeleteSessionUseCase): LogInViewModelFactory {
+        return LogInViewModelFactory(authUseCase, deleteSessionUseCase)
     }
 
     @Singleton
     @Provides
-    fun provideSignUpViewModelFactory(signUpUserUseCase: SignUpUserUseCase,
-                                      signOutUserUseCase: SignOutUserUseCase,
-                                      addUserDBUseCase: AddUserDBUseCase,
-                                      getCurrentUserUseCase: GetCurrentUserUseCase): SignUpViewModelFactory {
-        return SignUpViewModelFactory(signUpUserUseCase, signOutUserUseCase, addUserDBUseCase, getCurrentUserUseCase)
+    fun provideSignUpViewModelFactory(authUseCase: AuthUseCase): AuthViewModelFactory {
+        return AuthViewModelFactory(authUseCase)
     }
 
     @Singleton
     @Provides
-    fun provideAccountViewModelFactory(getCurrentUserUseCase: GetCurrentUserUseCase, getUserDBUseCase: GetUserDBUseCase, signOutUserUseCase: SignOutUserUseCase): AccountViewModelFactory {
-        return AccountViewModelFactory(getCurrentUserUseCase, getUserDBUseCase, signOutUserUseCase)
+    fun provideAccountViewModelFactory(getAccountUseCase: GetAccountUseCase,
+                                       deleteSessionUseCase: DeleteSessionUseCase,
+                                       getMovieFavoriteListUseCase: GetMovieFavoriteListUseCase,
+                                       getTvShowFavoriteListUseCase: GetTvShowFavoriteListUseCase): AccountViewModelFactory {
+        return AccountViewModelFactory(getAccountUseCase,
+                deleteSessionUseCase,
+                getMovieFavoriteListUseCase,
+                getTvShowFavoriteListUseCase)
     }
 
     @Singleton

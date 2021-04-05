@@ -1,56 +1,38 @@
 package com.example.moviesapp
 
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.Glide.*
-import com.example.moviesapp.data.model.movie.Movie
 import com.example.moviesapp.databinding.ActivityMainBinding
-import com.example.moviesapp.databinding.ListItemBinding
-import com.example.moviesapp.presentation.map.MapViewModel
-import com.example.moviesapp.presentation.map.MapViewModelFactory
 import com.example.moviesapp.presentation.account.AccountViewModel
 import com.example.moviesapp.presentation.account.AccountViewModelFactory
 import com.example.moviesapp.presentation.actorDetails.ActorDetailViewModel
 import com.example.moviesapp.presentation.actorDetails.ActorDetailViewModelFactory
+import com.example.moviesapp.presentation.auth.AuthViewModel
+import com.example.moviesapp.presentation.auth.AuthViewModelFactory
 import com.example.moviesapp.presentation.details.DetailViewModel
 import com.example.moviesapp.presentation.details.DetailViewModelFactory
 import com.example.moviesapp.presentation.login.LogInViewModel
 import com.example.moviesapp.presentation.login.LogInViewModelFactory
+import com.example.moviesapp.presentation.map.MapViewModel
+import com.example.moviesapp.presentation.map.MapViewModelFactory
 import com.example.moviesapp.presentation.movie.MovieViewModel
 import com.example.moviesapp.presentation.movie.MovieViewModelFactory
 import com.example.moviesapp.presentation.search.SearchViewModel
 import com.example.moviesapp.presentation.search.SearchViewModelFactory
-import com.example.moviesapp.presentation.signup.SignUpViewModel
-import com.example.moviesapp.presentation.signup.SignUpViewModelFactory
 import com.example.moviesapp.presentation.tvshow.TvShowViewModel
 import com.example.moviesapp.presentation.tvshow.TvShowViewModelFactory
-import com.example.moviesapp.presentation.utils.RVAdapter
-import com.google.api.Context
 import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
-import io.grpc.InternalChannelz.id
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.list_item.*
-import kotlinx.android.synthetic.main.list_item.view.*
-import retrofit2.Retrofit
-import java.io.*
+import java.util.*
 import javax.inject.Inject
-import javax.inject.Named
-import kotlin.math.sign
 
 
 @AndroidEntryPoint
@@ -80,9 +62,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var loginFactory: LogInViewModelFactory
     lateinit var logInViewModel: LogInViewModel
 
+
     @Inject
-    lateinit var signupFactory: SignUpViewModelFactory
-    lateinit var signUpViewModel: SignUpViewModel
+    lateinit var authFactory: AuthViewModelFactory
+    lateinit var authViewModel: AuthViewModel
 
     @Inject
     lateinit var accountFactory: AccountViewModelFactory
@@ -96,8 +79,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var navController: NavController
 
+    lateinit var sharedPreferences: SharedPreferences
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater?.inflate(R.menu.toolbar_menu, menu)
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
     }
 
@@ -105,6 +89,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(applicationContext)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+
+        val config = resources.configuration
+        val locale = Locale("tr")
+        Locale.setDefault(locale)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            config.setLocale(locale)
+        }
+        resources.updateConfiguration(config, resources.displayMetrics)
         setContentView(binding.root)
         setSupportActionBar(toolbar)
         viewmodel = ViewModelProvider(this, factory).get(MovieViewModel::class.java)
@@ -113,17 +106,19 @@ class MainActivity : AppCompatActivity() {
         actorViewModel = ViewModelProvider(this, actorFactory).get(ActorDetailViewModel::class.java)
         searchViewModel = ViewModelProvider(this, searchFactory).get(SearchViewModel::class.java)
         logInViewModel = ViewModelProvider(this, loginFactory).get(LogInViewModel::class.java)
-        signUpViewModel = ViewModelProvider(this, signupFactory).get(SignUpViewModel::class.java)
         accountViewModel = ViewModelProvider(this, accountFactory).get(AccountViewModel::class.java)
         mapViewModel = ViewModelProvider(this, mapFactory).get(MapViewModel::class.java)
+        authViewModel = ViewModelProvider(this, authFactory).get(AuthViewModel::class.java)
 
+        sharedPreferences = this.getSharedPreferences("sessionId", MODE_PRIVATE)
 
         navController = Navigation.findNavController(this, R.id.my_nav_host_fragment)
 
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.logInFragment, R.id.signUpFragment -> {
-                    bottomNavigationView2.visibility = View.INVISIBLE
+                R.id.logInFragment, R.id.authFragment -> {
+                    bottomNavigationView2.visibility = View.GONE
                     toolbar.visibility = View.GONE
                 }
                 R.id.moviesFragment -> {

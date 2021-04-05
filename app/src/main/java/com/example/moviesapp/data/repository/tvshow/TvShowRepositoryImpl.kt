@@ -1,5 +1,7 @@
 package com.example.moviesapp.data.repository.tvshow
 
+import com.example.moviesapp.data.model.apiResponse.MediaStatus
+import com.example.moviesapp.data.model.apiResponse.PostResponse
 import com.example.moviesapp.data.model.credits.Credits
 import com.example.moviesapp.data.model.tvshow.TvShowDetail
 import com.example.moviesapp.data.model.tvshow.TvShowList
@@ -22,34 +24,26 @@ class TvShowRepositoryImpl(val tvShowRemoteDataSource: TvShowRemoteDataSource) :
     }
 
     override suspend fun getTvShowDetail(id: String): Resource<TvShowDetail> {
-        return convertDetailResponseToResource(
+        return convertToResource(
                 tvShowRemoteDataSource.getTvShowDetail(id)
         )
     }
 
     override suspend fun getTvShowCredits(id: String): Resource<Credits> {
-        var response = tvShowRemoteDataSource.getTvShowCredits(id)
-        if(response.isSuccessful){
-            return Resource.Success(response.body()!!)
-        }
-        return Resource.Error(response.message())
+        return convertToResource(tvShowRemoteDataSource.getTvShowCredits(id))
     }
 
-    fun convertDetailResponseToResource(response: Response<TvShowDetail>): Resource<TvShowDetail> {
-        if (response.isSuccessful) {
+    override suspend fun rateTvShow(value: Number, tvShowId: Int, sessionId: String): Resource<PostResponse> {
+        return convertToResource(tvShowRemoteDataSource.rateTvShow(value, tvShowId, sessionId))
+    }
 
-            response.body()?.let {
-                return Resource.Success(it)
-            }
-        }
-        return Resource.Error(response.message())
+    override suspend fun getTvShowState(tvShowId: Int, sessionId: String): Resource<MediaStatus> {
+        return convertToResource(tvShowRemoteDataSource.geTvShowState(tvShowId, sessionId))
     }
 
 
-
-    fun convertToResource(response: Response<TvShowList>): Resource<TvShowList> {
+    private fun <T> convertToResource(response: Response<T>): Resource<T> {
         if (response.isSuccessful) {
-
             response.body()?.let {
                 return Resource.Success(it)
             }

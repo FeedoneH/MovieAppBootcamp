@@ -1,6 +1,8 @@
 package com.example.moviesapp.data.repository.tvshow.datasourceimplementation
 
 import com.example.moviesapp.data.api.TMDBService
+import com.example.moviesapp.data.model.apiResponse.MediaStatus
+import com.example.moviesapp.data.model.apiResponse.PostResponse
 import com.example.moviesapp.data.model.credits.Credits
 import com.example.moviesapp.data.model.tvshow.TvShowDetail
 import com.example.moviesapp.data.model.tvshow.TvShowList
@@ -24,5 +26,13 @@ class TvShowRemoteDataSourceImplementation(val tmdbService: TMDBService) : TvSho
 
     override suspend fun getTvShowCredits(id: String): Response<Credits> {
         return  tmdbService.getTvShowCreditsFromAPI(id)
+    }
+
+    override suspend fun geTvShowState(tvShowId: Int, sessionId: String): Response<MediaStatus> {
+        return tmdbService.getTvShowState(tvShowId,sessionId)
+    }
+
+    override suspend fun rateTvShow(value: Number, tvShowId: Int, sessionId: String): Response<PostResponse> {
+        return tmdbService.rateTvShow(value,tvShowId,sessionId)
     }
 }

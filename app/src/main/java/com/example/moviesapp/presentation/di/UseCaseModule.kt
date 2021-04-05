@@ -45,32 +45,8 @@ class UseCaseModule {
 
     @Singleton
     @Provides
-    fun provideGetAuthUseCase(repository: AuthRepository): GetCurrentUserUseCase {
-        return GetCurrentUserUseCase(repository)
-    }
-
-    @Singleton
-    @Provides
     fun provideAddUserUseCase(repository: UserRepository): AddUserDBUseCase {
         return AddUserDBUseCase(repository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideLogInUserUseCase(repository: AuthRepository): LogInUserUseCase {
-        return LogInUserUseCase(repository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideSignUpUserUseCase(repository: AuthRepository): SignUpUserUseCase {
-        return SignUpUserUseCase(repository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideSignOutUserUseCase(repository: AuthRepository): SignOutUserUseCase {
-        return SignOutUserUseCase(repository)
     }
 
     @Singleton
@@ -78,4 +54,64 @@ class UseCaseModule {
     fun provideGoogleMapUseCase(repository: GoogleMapRepository): GetPlacesUseCase {
         return GetPlacesUseCase(repository)
     }
+
+    @Singleton
+    @Provides
+    fun provideAuthUseCase(repository: Auth1Repository): AuthUseCase {
+        return AuthUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAccountUseCase(repository: AccountRepository): GetAccountUseCase {
+        return GetAccountUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDeleteSessionUseCase(repository: Auth1Repository): DeleteSessionUseCase {
+        return DeleteSessionUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideToggleFavoriteUseCase(repository: FavoriteMediaRepository): ToggleFavoriteUseCase {
+        return ToggleFavoriteUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRateMovieUseCase(repository: MovieRepository): RateMovieUseCase {
+        return RateMovieUseCase(repository)
+    }
+  @Singleton
+    @Provides
+    fun provideRateTvShowUseCase(repository: TvShowRepository): RateTvShowUseCase {
+        return RateTvShowUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetMovieStatusUseCase(repository: MovieRepository): GetMovieStatusUseCase {
+        return GetMovieStatusUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetMovieFavoritesUseCase(repository: AccountRepository): GetMovieFavoriteListUseCase {
+        return GetMovieFavoriteListUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetTvShowFavoritesUseCase(repository: AccountRepository): GetTvShowFavoriteListUseCase {
+        return GetTvShowFavoriteListUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetTvShowtateUseCase(repository: TvShowRepository): GetTvShowStateUseCase {
+        return GetTvShowStateUseCase(repository)
+    }
+
 }

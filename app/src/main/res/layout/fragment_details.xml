@@ -5,9 +5,10 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailsFragment">
+    tools:context=".presentation.details.DetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rateText"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -25,16 +26,73 @@
 
         <TextView
             android:id="@+id/titleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4sp"
-            android:layout_marginLeft="4sp"
-            android:text="TextView"
+            android:layout_width="0dp"
+
+            android:layout_height="27dp"
+            android:text="Text"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.018"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/poster"
             app:layout_constraintVertical_bias="0.0" />
+
+
+        <ImageView
+            android:id="@+id/nonfavorite"
+            android:layout_width="31dp"
+            android:layout_height="28dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/detailsRV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.146"
+            app:layout_constraintStart_toEndOf="@+id/shareImg"
+            app:layout_constraintTop_toBottomOf="@+id/titleText"
+            app:layout_constraintVertical_bias="0.038"
+            app:srcCompat="@drawable/ic_baseline_favorite_24" />
+
+        <ImageView
+            android:id="@+id/favorite"
+            android:layout_width="32dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="1dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/detailsRV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.146"
+            app:layout_constraintStart_toEndOf="@+id/shareImg"
+            app:layout_constraintTop_toBottomOf="@+id/titleText"
+            app:layout_constraintVertical_bias="0.026"
+            app:srcCompat="@drawable/ic_baseline_favorite_25" />
+
+        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+            android:id="@+id/library_decimal_ratingbar"
+            style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
+            android:layout_width="156dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:isIndicator="false"
+            android:max="5"
+
+            android:progressBackgroundTint="@color/yellow"
+            android:stepSize="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleText"
+            app:mrb_progressTint="@color/yellow" />
+
+        <ImageView
+            android:id="@+id/shareImg"
+            android:layout_width="31dp"
+            android:layout_height="29dp"
+            app:layout_constraintBottom_toTopOf="@+id/voteText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintStart_toEndOf="@+id/library_decimal_ratingbar"
+            app:layout_constraintTop_toTopOf="@+id/library_decimal_ratingbar"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_baseline_share_24" />
 
         <TextView
             android:id="@+id/voteText"
@@ -42,12 +100,10 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.012"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleText"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/library_decimal_ratingbar" />
 
         <TextView
             android:id="@+id/durationText"
@@ -57,7 +113,7 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.023"
+            app:layout_constraintHorizontal_bias="0.014"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/voteText"
             app:layout_constraintVertical_bias="0.0" />
@@ -73,7 +129,7 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.023"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/durationText"
             app:layout_constraintVertical_bias="0.0" />
@@ -84,8 +140,10 @@
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/aboutText" />
+            app:layout_constraintTop_toBottomOf="@+id/aboutText"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

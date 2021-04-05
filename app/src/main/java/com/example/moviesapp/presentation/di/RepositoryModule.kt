@@ -1,11 +1,13 @@
 package com.example.moviesapp.presentation.di
 
-import com.example.moviesapp.data.db.UserDao
+import com.example.moviesapp.data.repository.account.AccountRepositoryImpl
 import com.example.moviesapp.data.repository.actor.ActorRepositoryImpl
+import com.example.moviesapp.data.repository.account.datasource.AccountRemoteDataSource
 import com.example.moviesapp.data.repository.actor.datasource.ActorRemoteDataSource
-import com.example.moviesapp.data.repository.auth.AuthFBRepositoryImpl
-import com.example.moviesapp.data.repository.auth.datasource.AuthFireBaseDataSource
-import com.example.moviesapp.data.repository.auth.datasourceimplementation.AuthFireBaseDataSourceImpl
+import com.example.moviesapp.data.repository.auth.AuthRepositoryImpl
+import com.example.moviesapp.data.repository.auth.datasource.AuthDataSource
+import com.example.moviesapp.data.repository.favorite.FavoriteRepositoryImpl
+import com.example.moviesapp.data.repository.favorite.datasource.FavoriteDataSource
 import com.example.moviesapp.data.repository.map.GoogleMapRepositoryImpl
 import com.example.moviesapp.data.repository.map.mapdatasource.GoogleMapDataSource
 import com.example.moviesapp.data.repository.movie.MovieRepositoryImpl
@@ -58,15 +60,28 @@ class RepositoryModule {
         return UserRepositoryImpl(userDatabaseDataSource)
     }
 
-    @Singleton
-    @Provides
-    fun provideAuthRepositoryModule(authFireBaseDataSource: AuthFireBaseDataSource): AuthRepository {
-        return AuthFBRepositoryImpl(authFireBaseDataSource)
-    }
 
     @Singleton
     @Provides
     fun provideGoogleMapRepository(googleMapDataSource: GoogleMapDataSource): GoogleMapRepository {
         return GoogleMapRepositoryImpl(googleMapDataSource)
     }
+
+    @Singleton
+    @Provides
+    fun provideAuth1Repository(authDataSource: AuthDataSource): Auth1Repository {
+        return AuthRepositoryImpl(authDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAccountRepository(accountRemoteDataSource: AccountRemoteDataSource): AccountRepository {
+        return AccountRepositoryImpl(accountRemoteDataSource)
+    }
+    @Singleton
+    @Provides
+    fun provideFavoriteRepository(favoriteDataSource: FavoriteDataSource): FavoriteMediaRepository {
+        return FavoriteRepositoryImpl(favoriteDataSource)
+    }
+
 }

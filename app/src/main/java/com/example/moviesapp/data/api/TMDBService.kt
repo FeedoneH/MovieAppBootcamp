@@ -1,20 +1,23 @@
 package com.example.moviesapp.data.api
 
 import com.example.moviesapp.BuildConfig
+import com.example.moviesapp.data.model.account.Account
 import com.example.moviesapp.data.model.actor.ActorCredits
 import com.example.moviesapp.data.model.actor.ActorDetail
+import com.example.moviesapp.data.model.auth.SessionId
+import com.example.moviesapp.data.model.auth.SignOut
+import com.example.moviesapp.data.model.auth.TokenId
 import com.example.moviesapp.data.model.credits.Credits
+import com.example.moviesapp.data.model.apiResponse.PostResponse
+import com.example.moviesapp.data.model.favorites.FavoriteReuqestBody
 import com.example.moviesapp.data.model.movie.MovieDetail
 import com.example.moviesapp.data.model.movie.MovieList
+import com.example.moviesapp.data.model.apiResponse.MediaStatus
 import com.example.moviesapp.data.model.search.Search
 import com.example.moviesapp.data.model.tvshow.TvShowDetail
 import com.example.moviesapp.data.model.tvshow.TvShowList
-import dagger.Module
-import dagger.Provides
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 import javax.inject.Named
 
 
@@ -52,6 +55,63 @@ interface TMDBService {
     suspend fun getActorCreditsFromAPI(@Path("id") id: String, @Query("api_key") apiKey: String = BuildConfig.API_KEY): Response<ActorCredits>
 
     @GET("search/multi")
-    suspend fun getSearchResult(@Query("query") query: String,@Query("api_key") apiKey: String = BuildConfig.API_KEY): Response<Search>
+    suspend fun getSearchResult(@Query("query") query: String, @Query("api_key") apiKey: String = BuildConfig.API_KEY): Response<Search>
+
+    @GET("authentication/token/new")
+    suspend fun getTokenId(@Query("api_key") apiKey: String = BuildConfig.API_KEY): Response<TokenId>
+
+    @FormUrlEncoded
+    @POST("authentication/session/new")
+    suspend fun getSessionId(@Field("request_token") request_token: String, @Query("api_key") apiKey: String = BuildConfig.API_KEY): Response<SessionId>
+
+    @GET("account")
+    suspend fun getAccountDetails(@Query("session_id") sessionId: String, @Query("api_key") apiKey: String = BuildConfig.API_KEY): Response<Account>
+
+    @DELETE("authentication/session")
+    suspend fun deleteSessionId(@Query("session_id") sessionId: String, @Query("api_key") apiKey: String = BuildConfig.API_KEY): Response<SignOut>
+
+    @Headers("Content-type: application/json; charset=utf-8")
+    @POST("account/{account_id}/favorite")
+    suspend fun setAsFavorite(@Body body: FavoriteReuqestBody,
+                              @Path("account_id") accountId: String,
+                              @Query("session_id") sessionId: String,
+                              @Query("api_key") apiKey: String = BuildConfig.API_KEY): Response<PostResponse>
+
+
+    @FormUrlEncoded
+    @POST("movie/{movie_id}/rating")
+    suspend fun rateMovie(@Field("value") value: Number,
+                          @Path("movie_id") movieId: Int,
+                          @Query("session_id") sessionId: String,
+                          @Query("api_key") apiKey: String = BuildConfig.API_KEY): Response<PostResponse>
+
+
+    @FormUrlEncoded
+    @POST("tv/{tv_id}/rating")
+    suspend fun rateTvShow(@Field("value") value: Number,
+                           @Path("tv_id") tvshowId: Int,
+                           @Query("session_id") sessionId: String,
+                           @Query("api_key") apiKey: String = BuildConfig.API_KEY): Response<PostResponse>
+
+    @GET("movie/{movie_id}/account_states")
+    suspend fun getMovieState(@Path("movie_id") movieId: Int,
+                              @Query("session_id") sessionId: String,
+                              @Query("api_key") apiKey: String = BuildConfig.API_KEY): Response<MediaStatus>
+
+    @GET("tv/{tv_id}/account_states")
+    suspend fun getTvShowState(@Path("tv_id") tvshowId: Int,
+                               @Query("session_id") sessionId: String,
+                               @Query("api_key") apiKey: String = BuildConfig.API_KEY): Response<MediaStatus>
+
+
+    @GET("account/{account_id}/favorite/movies")
+    suspend fun getFavoriteMovies(@Path("account_id") accountId: String,
+                                  @Query("session_id") sessionId: String,
+                                  @Query("api_key") apiKey: String = BuildConfig.API_KEY): Response<MovieList>
+
+    @GET("account/{account_id}/favorite/tv")
+    suspend fun getFavoriteTvShows(@Path("account_id") accountId: String,
+                                   @Query("session_id") sessionId: String,
+                                   @Query("api_key") apiKey: String = BuildConfig.API_KEY): Response<TvShowList>
 
 }

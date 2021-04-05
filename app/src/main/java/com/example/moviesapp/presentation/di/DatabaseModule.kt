@@ -1,9 +1,12 @@
 package com.example.moviesapp.presentation.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
+import com.example.moviesapp.MainActivity
 import com.example.moviesapp.data.db.UserDao
 import com.example.moviesapp.data.db.UserDataBase
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,4 +33,5 @@ class DatabaseModule {
     fun provideSavedNewsDao(userDataBase: UserDataBase): UserDao {
         return userDataBase.userDao()
     }
+
 }

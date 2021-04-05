@@ -6,7 +6,7 @@
     app:startDestination="@id/logInFragment">
     <fragment
         android:id="@+id/moviesFragment"
-        android:name="com.example.moviesapp.MoviesFragment"
+        android:name="com.example.moviesapp.presentation.movie.MoviesFragment"
         android:label="fragment_movies"
         tools:layout="@layout/fragment_movies" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.example.moviesapp.DetailsFragment"
+        android:name="com.example.moviesapp.presentation.details.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" >
         <argument
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/tvShowsFragment"
-        android:name="com.example.moviesapp.TvShowsFragment"
+        android:name="com.example.moviesapp.presentation.tvshow.TvShowsFragment"
         android:label="fragment_tv_shows"
         tools:layout="@layout/fragment_tv_shows" >
         <action
@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/actorDetailsFragment"
-        android:name="com.example.moviesapp.ActorDetailsFragment"
+        android:name="com.example.moviesapp.presentation.actorDetails.ActorDetailsFragment"
         android:label="fragment_actor_details"
         tools:layout="@layout/fragment_actor_details" >
         <action
@@ -56,7 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.moviesapp.SearchFragment"
+        android:name="com.example.moviesapp.presentation.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -68,37 +68,19 @@
     </fragment>
     <fragment
         android:id="@+id/logInFragment"
-        android:name="com.example.moviesapp.LogInFragment"
+        android:name="com.example.moviesapp.presentation.login.LogInFragment"
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_log_in" >
         <action
-            android:id="@+id/action_logInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            android:id="@+id/action_logInFragment_to_authFragment"
+            app:destination="@id/authFragment" />
         <action
             android:id="@+id/action_logInFragment_to_moviesFragment"
             app:destination="@id/moviesFragment" />
-        <action
-            android:id="@+id/action_logInFragment_to_accountFragment"
-            app:destination="@id/accountFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.example.moviesapp.SignUpFragment"
-        android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" >
-        <action
-            android:id="@+id/action_signUpFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
-        <action
-            android:id="@+id/action_signUpFragment_to_moviesFragment"
-            app:destination="@id/moviesFragment" />
-        <action
-            android:id="@+id/action_signUpFragment_to_accountFragment"
-            app:destination="@id/accountFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.example.moviesapp.AccountFragment"
+        android:name="com.example.moviesapp.presentation.account.AccountFragment"
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" >
         <action
@@ -107,7 +89,25 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.example.moviesapp.MapsFragment"
+        android:name="com.example.moviesapp.presentation.map.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.example.moviesapp.presentation.auth.AuthFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_auth" >
+        <action
+            android:id="@+id/action_authFragment_to_moviesFragment"
+            app:destination="@id/moviesFragment" />
+        <argument
+            android:name="url"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_authFragment_to_accountFragment2"
+            app:destination="@id/accountFragment" />
+        <argument
+            android:name="tokenId"
+            app:argType="string" />
+    </fragment>
 </navigation>

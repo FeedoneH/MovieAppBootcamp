@@ -4,13 +4,13 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.moviesapp.data.model.movie.Movie
 
 
-abstract class RVAdapter<T>() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class RVAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val callback = object : DiffUtil.ItemCallback<T>() {
         override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
             return oldItem.toString() == newItem.toString()
@@ -38,14 +38,14 @@ abstract class RVAdapter<T>() : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
 
     override fun getItemViewType(position: Int): Int {
 
-        return getLayoutId(position,  differ.currentList[position])
+        return setLayout(position,  differ.currentList[position])
     }
 
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
 
-    abstract fun getLayoutId(position: Int, obj: T): Int
+    abstract fun setLayout(position: Int, obj: T): Int
     abstract fun getMyViewHolder(view: View, viewType: Int): RecyclerView.ViewHolder
     internal interface Binder<T> {
         fun bind(data: T)
