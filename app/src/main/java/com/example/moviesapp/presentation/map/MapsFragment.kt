@@ -71,7 +71,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     mapViewModel.nearbyCinemas.observe(viewLifecycleOwner, Observer {
                         var places = it.data?.results
                         places?.forEach {
-//                        it.geometry.location.lat =
                             var location = LatLng(it.geometry.location.lat, it.geometry.location.lng)
                             placeMarkerOnMap(location, "")
                         }
@@ -82,11 +81,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         }
         createLocationRequest()
         startLocationUpdates()
-//        mapViewModel.nearbyCinemas.observe(viewLifecycleOwner, {
-//
-//            placeMarkerOnMap(LatLng(lastLocation.latitude, lastLocation.longitude), "mylo")
-//            Log.i("newPlace", "onMapReady: ${it.data},")
-//        })
 
     }
 

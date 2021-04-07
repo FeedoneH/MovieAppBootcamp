@@ -46,10 +46,10 @@
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/detailsRV"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.146"
+            app:layout_constraintHorizontal_bias="0.14"
             app:layout_constraintStart_toEndOf="@+id/shareImg"
             app:layout_constraintTop_toBottomOf="@+id/titleText"
-            app:layout_constraintVertical_bias="0.038"
+            app:layout_constraintVertical_bias="0.012"
             app:srcCompat="@drawable/ic_baseline_favorite_24" />
 
         <ImageView
@@ -60,10 +60,10 @@
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/detailsRV"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.146"
+            app:layout_constraintHorizontal_bias="0.142"
             app:layout_constraintStart_toEndOf="@+id/shareImg"
             app:layout_constraintTop_toBottomOf="@+id/titleText"
-            app:layout_constraintVertical_bias="0.026"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/ic_baseline_favorite_25" />
 
         <me.zhanghai.android.materialratingbar.MaterialRatingBar
@@ -83,11 +83,11 @@
 
         <ImageView
             android:id="@+id/shareImg"
-            android:layout_width="31dp"
-            android:layout_height="29dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             app:layout_constraintBottom_toTopOf="@+id/voteText"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintHorizontal_bias="0.139"
             app:layout_constraintStart_toEndOf="@+id/library_decimal_ratingbar"
             app:layout_constraintTop_toTopOf="@+id/library_decimal_ratingbar"
             app:layout_constraintVertical_bias="0.0"
