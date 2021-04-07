@@ -9,6 +9,7 @@ import com.example.moviesapp.data.model.credits.Credits
 import com.example.moviesapp.data.model.favorites.FavoriteReuqestBody
 import com.example.moviesapp.data.model.movie.MovieDetail
 import com.example.moviesapp.data.model.apiResponse.MediaStatus
+import com.example.moviesapp.data.model.apiResponse.Rated
 import com.example.moviesapp.data.model.tvshow.TvShowDetail
 import com.example.moviesapp.data.util.Resource
 import com.example.moviesapp.domain.usecase.*
@@ -36,6 +37,7 @@ class DetailViewModel(
     var toggleFavResponse: MutableLiveData<Resource<PostResponse>> = MutableLiveData()
     var authInfo: MutableLiveData<Resource<Account>> = MutableLiveData()
     var movieRate: MutableLiveData<Resource<PostResponse>> = MutableLiveData()
+    var movieRating: MutableLiveData<Int> = MutableLiveData()
     var tvShowRate: MutableLiveData<Resource<PostResponse>> = MutableLiveData()
     fun getAuthInfo(sessionId: String) = viewModelScope.launch (Dispatchers.IO) {
         authInfo.postValue(Resource.Loading())
@@ -92,9 +94,15 @@ class DetailViewModel(
         try {
             var response = getMovieStatusUseCase.execute(movieId, sessionId)
             movieState.postValue(response)
+           if( response.data?.rated is Rated) {
+               movieRating.postValue((response.data!!.rated as Rated)?.value)
+           }
         } catch (e: Exception) {
             e.printStackTrace()
-            movieState.postValue(e.message?.let { Resource.Error(it) })
+            var response = getMovieStatusUseCase.execute(movieId, sessionId)
+            if (e.message!!.isNotEmpty()){
+            var res =Resource.Success(MediaStatus(response.data!!.favorite,response.data!!.id,Rated(0),false))
+            movieState.postValue(res)}
         }
     }
 

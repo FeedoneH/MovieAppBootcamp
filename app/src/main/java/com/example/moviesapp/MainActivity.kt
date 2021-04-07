@@ -1,7 +1,10 @@
 package com.example.moviesapp
 
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +21,7 @@ import com.example.moviesapp.presentation.auth.AuthViewModel
 import com.example.moviesapp.presentation.auth.AuthViewModelFactory
 import com.example.moviesapp.presentation.details.DetailViewModel
 import com.example.moviesapp.presentation.details.DetailViewModelFactory
+import com.example.moviesapp.presentation.login.LogInFragment
 import com.example.moviesapp.presentation.login.LogInViewModel
 import com.example.moviesapp.presentation.login.LogInViewModelFactory
 import com.example.moviesapp.presentation.map.MapViewModel
@@ -28,7 +32,6 @@ import com.example.moviesapp.presentation.search.SearchViewModel
 import com.example.moviesapp.presentation.search.SearchViewModelFactory
 import com.example.moviesapp.presentation.tvshow.TvShowViewModel
 import com.example.moviesapp.presentation.tvshow.TvShowViewModelFactory
-import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -87,18 +90,23 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(applicationContext)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-
-        val config = resources.configuration
-        val locale = Locale("tr")
-        Locale.setDefault(locale)
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            config.setLocale(locale)
-        }
-        resources.updateConfiguration(config, resources.displayMetrics)
         setContentView(binding.root)
+
+
+
+        if (Locale.getDefault().equals(Locale.ENGLISH) ) {
+
+            toolbar.setTitle(resources.getString(R.string.toolBar))
+        } else {
+            var config = resources.configuration
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                config.setLocale(Locale("tr"))
+                toolbar.setTitle(resources.getString(R.string.toolBar))
+            }
+        }
         setSupportActionBar(toolbar)
         viewmodel = ViewModelProvider(this, factory).get(MovieViewModel::class.java)
         tvShowViewModel = ViewModelProvider(this, tvshowFactory).get(TvShowViewModel::class.java)
@@ -139,7 +147,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         bottomNavigationView2.setupWithNavController(navController)
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -149,5 +156,8 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase)
+    }
 
 }

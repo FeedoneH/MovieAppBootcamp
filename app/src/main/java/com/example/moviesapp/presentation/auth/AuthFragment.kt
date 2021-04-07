@@ -40,13 +40,11 @@ class AuthFragment : Fragment() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     var currentUrl = request!!.url.toString()
-                    weblinkText.text = currentUrl ?: ""
                     view?.loadUrl(currentUrl)
                     if (currentUrl.contains("/allow")) {
                         authViewModel.getSessionId(tokenId)
                         authViewModel.sessionInfo.observe(viewLifecycleOwner, {
-                            Log.i("sessionid", "shouldOverrideUrlLoading: ${it.message}")
-                            if (it.data != null) {
+                                if (it.data != null) {
                                 if (it.data.success == true) {
                                     var idInfo = it.data
                                     (activity as MainActivity).sharedPreferences.edit().putString("sessionId", idInfo.sessionId).apply()

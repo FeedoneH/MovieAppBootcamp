@@ -6,6 +6,7 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
+    id("com.google.android.gms.oss-licenses-plugin")
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: "androidx.navigation.safeargs.kotlin"
@@ -51,6 +52,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-database:19.7.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     def retrofit_version = "2.9.0"
     def hilt_version = "2.33"
     def nav_version = "2.3.4"
@@ -102,6 +104,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:18.0.0'
 
     implementation 'com.appolica:interactive-info-window:v1.0.6'
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
+
+
 }
 repositories {
     mavenCentral()

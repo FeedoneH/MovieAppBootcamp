@@ -16,8 +16,7 @@ import com.example.moviesapp.data.repository.search.SearchRepositoryImpl
 import com.example.moviesapp.data.repository.search.datasource.SearchDataSource
 import com.example.moviesapp.data.repository.tvshow.TvShowRepositoryImpl
 import com.example.moviesapp.data.repository.tvshow.datasource.TvShowRemoteDataSource
-import com.example.moviesapp.data.repository.user.UserRepositoryImpl
-import com.example.moviesapp.data.repository.user.datasource.UserDatabaseDataSource
+
 import com.example.moviesapp.domain.repository.*
 import dagger.Module
 import dagger.Provides
@@ -53,13 +52,6 @@ class RepositoryModule {
     fun provideSearchRepositoryModule(searchDataSource: SearchDataSource): SearchRepository {
         return SearchRepositoryImpl(searchDataSource)
     }
-
-    @Singleton
-    @Provides
-    fun provideUserRepositoryModule(userDatabaseDataSource: UserDatabaseDataSource): UserRepository {
-        return UserRepositoryImpl(userDatabaseDataSource)
-    }
-
 
     @Singleton
     @Provides

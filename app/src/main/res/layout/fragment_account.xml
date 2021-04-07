@@ -48,24 +48,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/favoriteMoviesLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Favorite Movies"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.045"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signoutBtn" />
+    <Button
+        android:id="@+id/settingsBtn"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Settings"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#673AB7"
+        app:backgroundTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signoutBtn" />
+
+    <TextView
+        android:id="@+id/favoriteMoviesLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Favorite Movies"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsBtn" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movieRV"
         android:layout_width="404dp"
-        android:layout_height="292dp"
+        android:layout_height="272dp"
         android:background="#00C31D1D"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -104,5 +117,6 @@
         app:layout_constraintVertical_bias="0.0">
 
     </androidx.recyclerview.widget.RecyclerView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout >

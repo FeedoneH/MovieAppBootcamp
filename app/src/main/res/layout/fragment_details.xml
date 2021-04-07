@@ -75,9 +75,8 @@
             android:layout_marginLeft="4dp"
             android:isIndicator="false"
             android:max="5"
-
             android:progressBackgroundTint="@color/yellow"
-            android:stepSize="1"
+            android:stepSize="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleText"
             app:mrb_progressTint="@color/yellow" />

@@ -18,13 +18,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moviesapp.MainActivity
 import com.example.moviesapp.R
+import com.example.moviesapp.data.model.apiResponse.MediaStatus
 import com.example.moviesapp.data.model.apiResponse.Rated
 import com.example.moviesapp.data.model.credits.Cast
 import com.example.moviesapp.data.model.favorites.FavoriteReuqestBody
+import com.example.moviesapp.data.util.Resource
 import com.example.moviesapp.databinding.HorizontalListItemBinding
 import com.example.moviesapp.presentation.utils.RVAdapter
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.horizontal_list_item.view.*
+import kotlinx.coroutines.delay
+import java.util.*
+import kotlin.reflect.typeOf
 
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
@@ -33,7 +38,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     val navArgs: DetailsFragmentArgs by navArgs()
     var id: Int? = null
     var mediaType: String? = null
-
+    var rating: Float ?= null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         detailViewModel = (activity as MainActivity).detailViewModel
@@ -41,7 +46,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
         loadMediaDetails(sessionId)
         loadRV()
-            if (sessionId != null) {
+        if (sessionId != null) {
             detailViewModel.getAuthInfo(sessionId)
             library_decimal_ratingbar.setOnRatingChangeListener { ratingBar, rating ->
 
@@ -55,32 +60,18 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 if (navArgs.selectedTvShowID != null) {
                     var tvId = navArgs.selectedTvShowID!!
                     sessionId.let {
-
-                        detailViewModel.rateTvShow(rating, tvId.toInt(), sessionId)
+                        detailViewModel.rateTvShow(rating, tvId.toInt(), it)
                     }
                 }
             }
-                detailViewModel.movieState.observe(viewLifecycleOwner, { state ->
-                    if (state.data?.rated is Rated) {
+            detailViewModel.movieState.observe(viewLifecycleOwner, {
+                 setRatingStars(it)
+            })
+            detailViewModel.tvshowState.observe(viewLifecycleOwner, {
+                setRatingStars(it)
+            })
 
-                            if((state.data.rated as Rated).value>0){
-                                library_decimal_ratingbar.rating = state.data?.rated?.value.toFloat()
-                                library_decimal_ratingbar.progress = state.data.rated.value
-                            Log.i("rate", "loadMediaDetails: ${library_decimal_ratingbar.progress} ${library_decimal_ratingbar.rating}")
-
-//                        val star = library_decimal_ratingbar.progressDrawable as LayerDrawable
-//                        stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
-//                        context?.let { it1 -> ContextCompat.getColor(it1, R.color.yellow) }
-
-
-                        } else {
-                            Log.i("rate", "elseee: ${state.data.rated}")
-//                            library_decimal_ratingbar.rating = state.data.rated.value.toFloat()
-//                            library_decimal_ratingbar.progress = state.data.rated.value
-                        }
-                    }
-                })
-            setFavoriteIcon(sessionId)
+             setFavoriteIcon(sessionId)
 
             detailViewModel.authInfo.observe(viewLifecycleOwner, { auth ->
 
@@ -108,7 +99,20 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             sendIntent.type = "text/plain"
             requireContext().startActivity(sendIntent)
         }
+
     }
+fun setRatingStars(it: Resource<MediaStatus>){
+    if (it.data?.rated!=null) {
+        var numStr= it.data?.rated?.toString()?.replace("[^\\d.]".toRegex(), "")
+        if (numStr?.length!! >0){
+            library_decimal_ratingbar.rating = numStr.toFloat()
+            library_decimal_ratingbar.progress = numStr.toFloat().toInt()
+        }
+
+    } else{
+        library_decimal_ratingbar.progress = 2
+    }
+}
     override fun onResume() {
         super.onResume()
         var sessionId = (activity as MainActivity).sharedPreferences.getString("sessionId", null)

@@ -3,26 +3,23 @@ package com.example.moviesapp.presentation.di
 import com.example.moviesapp.BuildConfig
 import com.example.moviesapp.data.api.GoogleMapService
 import com.example.moviesapp.data.api.TMDBService
+import com.example.moviesapp.data.model.apiResponse.MediaStatus
+import com.example.moviesapp.data.model.apiResponse.Rated
+import com.google.gson.*
+import com.google.gson.reflect.TypeToken
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import okhttp3.CipherSuite.Companion.TLS_DHE_RSA_WITH_AES_128_CBC_SHA
-import okhttp3.CipherSuite.Companion.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
-import okhttp3.CipherSuite.Companion.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
-import okhttp3.CipherSuite.Companion.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-import okhttp3.CipherSuite.Companion.TLS_RSA_WITH_3DES_EDE_CBC_SHA
-import okhttp3.CipherSuite.Companion.TLS_RSA_WITH_AES_128_CBC_SHA
-import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
-import okhttp3.TlsVersion
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.reflect.Type
 import java.util.*
-import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
+
 
 
 @Module
@@ -36,6 +33,7 @@ class NetModule {
 
         return Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
+
                 .baseUrl(BuildConfig.BASE_URL)
                 .client(okHttpClient)
                 .build()

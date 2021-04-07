@@ -53,6 +53,9 @@
         <argument
             android:name="selected_actorID"
             app:argType="string" />
+        <action
+            android:id="@+id/action_actorDetailsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -110,4 +113,26 @@
             android:name="tokenId"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.moviesapp.SettingsFragment"
+        android:label="fragment_settings_list"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_licenseFragment"
+            app:destination="@id/licenseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.moviesapp.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/licenseFragment"
+        android:name="com.example.moviesapp.LicenseFragment"
+        android:label="fragment_license"
+        tools:layout="@layout/fragment_license" />
 </navigation>

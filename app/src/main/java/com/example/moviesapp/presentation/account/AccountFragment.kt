@@ -56,6 +56,9 @@ class AccountFragment : Fragment() {
                 }
             })
         }
+            settingsBtn.setOnClickListener {
+                findNavController().navigate(R.id.settingsFragment)
+            }
         loadFavoriteMoviesRV()
         loadFavoriteTvShowRV()
         favoriteTvsLabel.setOnClickListener {
